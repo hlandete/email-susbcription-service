@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  public-service:
+    image: public-service
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        APP_NAME: public-service
+        PORT: 3000
+    ports:
+      - 3000:3000
+    networks:
+      - public
+
+  subscription-service:
+    image: subscription-service
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        APP_NAME: subscription-service
+        PORT: 3001
+    networks:
+      - public
+      - private
+
+  mongodb:
+    image: mongo:latest
+    networks:
+      - private
+    volumes:
+      - mongo_data:/data/db/
+
+  email-service:
+    image: email-service
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        APP_NAME: email-service
+        PORT: 3002
+    networks:
+      - private
+    ports:
+      - 3002:3002
+
+volumes:
+  mongo_data:
+
+networks:
+  public:
+    driver: bridge
+  private:
+    driver: bridge
+
+

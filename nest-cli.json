@@ -1,0 +1,67 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/subscriptions/src",
+  "monorepo": true,
+  "root": "apps/subscriptions",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/subscriptions/tsconfig.app.json",
+    "plugins": ["@nestjs/swagger/plugin"]
+  },
+  "projects": {
+    "subscriptions": {
+      "type": "application",
+      "root": "apps/subscriptions",
+      "entryFile": "main",
+      "sourceRoot": "apps/subscriptions/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/subscriptions/tsconfig.app.json"
+      }
+    },
+    "public-service": {
+      "type": "application",
+      "root": "apps/public-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/public-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/public-service/tsconfig.app.json"
+      }
+    },
+    "shared": {
+      "type": "library",
+      "root": "libs/shared",
+      "entryFile": "index",
+      "sourceRoot": "libs/shared/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/shared/tsconfig.lib.json"
+      }
+    },
+    "private-service": {
+      "type": "application",
+      "root": "apps/private-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/private-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/private-service/tsconfig.app.json"
+      }
+    },
+    "email-service": {
+      "type": "application",
+      "root": "apps/email-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/email-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/email-service/tsconfig.app.json"
+      }
+    },
+    "subscription-service": {
+      "type": "application",
+      "root": "apps/subscription-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/subscription-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/subscription-service/tsconfig.app.json"
+      }
+    }
+  }
+}
