@@ -1,30 +1,42 @@
 import { CreateSubscriptionDto } from '@app/shared/dto/create-subscription.dto';
 import { QuerySubscriptionDto } from '@app/shared/dto/query-subscription.dto';
+import { ISubscription } from '@app/shared/interfaces/subscription.interface';
+import { ISendMailOptions, MailerService } from '@nestjs-modules/mailer';
 import { HttpService } from '@nestjs/axios';
-import { BadGatewayException, Injectable } from '@nestjs/common';
-import { resolve } from 'path/posix';
+import { Injectable } from '@nestjs/common';
+import { Subscription } from 'apps/subscription-service/src/subscription/schema/subscription.schema';
 import { map } from 'rxjs';
+
+interface ProcessEmailResponse {
+  email: string;
+  success: boolean;
+}
 
 @Injectable()
 export class EmailServiceService {
-  constructor(private readonly httpService: HttpService){}
-  async sendFilteredEmail(query: QuerySubscriptionDto): Promise<any> {
+  constructor(private readonly httpService: HttpService, private readonly mailerService: MailerService){}
+  async sendEmails(query: QuerySubscriptionDto): Promise<any> {
 
-    query.newsletterFlag = true;
-
-    const subscriptions: Array<CreateSubscriptionDto> = await this.httpService.get(process.env.SUBSCRIPTION_URL+'byFilter/'+query).pipe(map(response => response.data)).toPromise();
-
-    let response = [];
-    subscriptions.forEach(sub => {
-      response.push(this.processEmail(sub));
+    const subscriptions = await this.getSubscriptionData(query);
+     
+    let response = subscriptions.map(sub => {
+      return this.processEmail(sub);
     });
+    
+    Promise.all(response).then((res:Array<ProcessEmailResponse>)=>{
+         // Group by success and failed emails
+        res.reduce(function (r, a) {
+          a.success ? r.success.push(a.email) : r.error.push(a.email)
+          return r;
+      }, {success: [], error: []});
+    })
     
     return response;
   }
 
-  processEmail(sub){
+  processEmail(sub): Promise<ProcessEmailResponse>{
 
-    const emailData = {
+    const emailData: ISendMailOptions = {
       to: sub.email,
       from: 'support@test.com',
       subject: 'Testing Nest Mailermodule with template',
@@ -32,13 +44,21 @@ export class EmailServiceService {
       context: sub,
   }
 
-    return new Promise((resolve, reject) =>{
+    return new Promise(async (resolve, reject) =>{
       try {
-       resolve(true)
+        await this.mailerService.sendMail(emailData);
+        resolve({email: sub.email, success: true})
     } catch (e) {
-        reject(new BadGatewayException('Email send failed'));
+        reject({email: sub.email, success: false});
     }
     })
    
   }
+
+  getSubscriptionData(query): Promise<Array<ISubscription>> {
+    query.newsletterFlag = true;
+
+    return this.httpService.get(process.env.SUBSCRIPTION_URL+'byFilter/'+query).pipe(map(response => response.data)).toPromise();
+  }
 }
+

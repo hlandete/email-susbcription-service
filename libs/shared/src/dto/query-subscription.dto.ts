@@ -1,7 +1,12 @@
 import { IsGender } from "@app/shared/validators/isGender.validator";
 import { IsBoolean, IsDateString, IsEmail, IsNumber, IsOptional, IsString } from "class-validator";
 
-export class QuerySubscriptionDto {
+export class QuerySubscriptionDto  {
+
+    @IsOptional()
+    @IsEmail()
+    _id?: string;
+
     @IsOptional()
     @IsEmail()
     email?: string;

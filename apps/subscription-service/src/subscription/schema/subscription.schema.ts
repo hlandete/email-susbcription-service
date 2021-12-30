@@ -7,6 +7,7 @@ export type SubscriptionDocument = Subscription & Document;
 
 @Schema()
 export class Subscription {
+
   @ApiProperty()
   @Prop()
   email: string;

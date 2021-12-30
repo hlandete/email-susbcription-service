@@ -1,19 +1,23 @@
 import { SharedModule } from '@app/shared';
 import { Module } from '@nestjs/common';
-import { HttpModule, HttpService } from '@nestjs/axios'
-import { PublicServiceController } from './public-service.controller';
-import { PublicServiceService } from './public-service.service';
+import { HttpModule } from '@nestjs/axios'
+import { PublicController } from './public-service.controller';
+import { PublicService } from './public-service.service';
 import { HttpServiceInterceptor } from '@app/shared/interceptors/http.interceptor';
+import { ResponseInterceptor } from '../interceptors/api_response.interceptor';
 
 @Module({
   imports: [HttpModule, SharedModule],
-  controllers: [PublicServiceController],
+  controllers: [PublicController],
   providers: [{
     provide: 'APP_INTERCEPTOR',
     useClass: HttpServiceInterceptor,
-    
   },
-  PublicServiceService],
+  {
+    provide: 'APP_INTERCEPTOR',
+    useClass: ResponseInterceptor,
+  },
+  PublicService],
 
 })
-export class PublicServiceModule {}
+export class PublicModule {}

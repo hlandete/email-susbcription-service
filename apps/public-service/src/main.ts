@@ -1,10 +1,11 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { PublicServiceModule } from './public-service.module';
+import { PublicModule } from './public-service.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(PublicServiceModule);
+  const app = await NestFactory.create<NestExpressApplication>(PublicModule);
   app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
@@ -15,8 +16,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(process.env.PORT);
+  await app.listen(3000);
 
-  console.log('Listening on.... ' + process.env.PORT);
+  console.log('Listening on.... ' + 3000);
 }
 bootstrap();

@@ -5,19 +5,6 @@ import { CreateSubscriptionDto } from './create-subscription.dto';
 
 export class UpdateSubscriptionDto extends PartialType(CreateSubscriptionDto) {
 
-   /* @IsOptional()
-    @IsString()
-    firstName: string;
-
-    @IsOptional()
-    @IsGender()
-    gender: string;
-
-    @IsOptional()
-    @IsDate()
-    birthDate: Date;*/
-
-    @IsOptional()
     @IsBoolean()
     newsletterFlag: boolean;
 

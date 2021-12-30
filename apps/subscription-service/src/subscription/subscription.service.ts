@@ -15,6 +15,7 @@ export class SubscriptionService {
     const newSubscription = {...createSubscriptionDto, newsletterFlag: true}
     // Check if the email exists for an specific campaign. If so we reactivate the flag to true
     return this.subscriptionModel.findOne({email: newSubscription.email, campaignId: newSubscription.campaignId}).exec().then( (subExists)=>{
+      console.log(subExists);
       if(subExists){
         return this.update(subExists._id, newSubscription);
       }
@@ -34,12 +35,12 @@ export class SubscriptionService {
   }
 
   findByFilter(query: QuerySubscriptionDto): Promise<Subscription[]> {
-    console.log(query);
     return this.subscriptionModel.find(query).exec();
   }
 
-  update(id: string, updateSubscriptionDto: UpdateSubscriptionDto): Promise<any> {
-    return this.subscriptionModel.updateOne({_id: id}, updateSubscriptionDto).exec();
+  update(id: string, updateSubscriptionDto: UpdateSubscriptionDto): Promise<Subscription> {
+    this.subscriptionModel.updateOne({_id: id}, updateSubscriptionDto).exec();
+    return this.findOne(id);
   }
 
   remove(id: string) {

@@ -1,17 +1,19 @@
 import { CreateSubscriptionDto } from '@app/shared/dto/create-subscription.dto';
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { PublicServiceService } from './public-service.service';
+import { Body, Controller, Get, Param, Post, UseInterceptors } from '@nestjs/common';
+import { ApiOkResponse } from '@nestjs/swagger';
+import { ResponseInterceptor } from '../interceptors/api_response.interceptor';
+import { PublicService } from './public-service.service';
 @Controller()
-export class PublicServiceController {
-  constructor(private readonly publicServiceService: PublicServiceService) {}
+export class PublicController {
+  constructor(private readonly publicService: PublicService) {}
 
   @Post('create')
   async createSubscription(@Body() createSubscriptionBody: CreateSubscriptionDto){
-    return this.publicServiceService.createSubscription(createSubscriptionBody).toPromise();
+    return this.publicService.createSubscription(createSubscriptionBody);
   }
 
-  @Post('cancel/:id')
+  @Get('cancel/:id')
   cancelSubscription(@Param('id') id): any{
-    return this.publicServiceService.cancelSubscription(id).toPromise();
+    return this.publicService.cancelSubscription(id);
   }
 }
