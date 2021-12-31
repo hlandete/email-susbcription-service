@@ -1,10 +1,11 @@
-FROM node:12.19.0-alpine3.9 AS development
+FROM node:16.13.0
 
+ENV NODE_ENV=docker 
 ARG PORT
 WORKDIR /usr/src/app
 
 COPY ./package*.json ./
-COPY ./apps/email-service/docker.env ./.env
+COPY ./apps/env/email-service/docker.env ./.env
 COPY ./apps/email-service/templates ./templates
 
 RUN npm install 

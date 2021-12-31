@@ -10,7 +10,7 @@ import { EmailServiceService } from './email-service.service';
 @Module({
   imports: [
     HttpModule,
-    SharedModule, 
+    SharedModule.register(), 
     MailerModule.forRoot({
       transport: `smtps://user@domain.com:pass@smtp.domain.com`,
       defaults: {

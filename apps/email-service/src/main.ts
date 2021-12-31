@@ -20,8 +20,7 @@ async function bootstrap() {
   app.setBaseViewsDir(__dirname + '/templates');
   app.setViewEngine('hbs');
 
-  await app.listen(3002);
-  console.log(process.env.NODE_ENV);
-  console.log('Listening on.... ' + 3002);
+  await app.listen(process.env.PORT || 3002);
+  console.log('Listening on.... ' + process.env.PORT || 3002);
 }
 bootstrap();
