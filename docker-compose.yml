@@ -16,6 +16,8 @@ services:
 
     subscription-service:
         image: subscription-service
+        depends_on:
+            - mongodb
         build:
             context: .
             dockerfile: ./apps/subscription-service/Dockerfile
@@ -37,6 +39,7 @@ services:
         image: email-service
         build:
             context: .
+            target: production
             dockerfile: ./apps/email-service/Dockerfile
             args:
                 APP_NAME: email-service

@@ -1,16 +1,33 @@
-FROM node:16.13.0
-ARG APP_NAME
-ARG PORT
-ENV NODE_ENV=docker    
+FROM node:16.13.0 AS development
+ARG ENV
+
+ENV NODE_ENV=$ENV 
+
 WORKDIR /usr/src/app
 
 COPY ./package*.json ./
-COPY ./apps/env/subscription-service/docker.env ./.env
 
-RUN npm install 
+RUN npm ci --development
 
-COPY dist/apps/subscription-service/ .
+COPY . .
+
+RUN npm run build:subscription-service
+
+FROM node:16.13.0  as production
+
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm ci --production
+
+COPY --from=development /usr/src/app/dist/apps/subscription-service .
+COPY --from=development /usr/src/app/apps/subscription-service/.env .
+
 
 CMD ["node", "main"]
 
-EXPOSE $PORT
+EXPOSE 3002

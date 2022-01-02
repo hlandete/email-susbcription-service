@@ -6,9 +6,11 @@ import { SubscriptionServiceService } from './subscription-service.service';
 import { SubscriptionModule } from './subscription/subscription.module';
 
 @Module({
-  imports: [MongooseModule.forRoot(`mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DATABASE}`),
+  imports: [
             SharedModule.register(),
-            SubscriptionModule],
+            MongooseModule.forRoot(`mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DATABASE}`),
+            SubscriptionModule
+          ],
   controllers: [SubscriptionServiceController],
   providers: [SubscriptionServiceService],
 })

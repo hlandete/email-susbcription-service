@@ -9,7 +9,7 @@
     "build": "nest build",
     "build:public-service": "nest build public-service",
     "build:subscription-service": "nest build subscription-service",
-    "build:email-service": "nest build email-service  && xcopy .\\apps\\email-service\\templates\\ .\\dist\\apps\\email-service\\templates\\ /Y",
+    "build:email-service": "nest build email-service",
     "build:all": "npm run build:public-service & npm run build:subscription-service & npm run build:email-service",
     "start:public-service": "NODE_ENV=local APP_NAME=public-service nest start public-service",
     "start:subscription-service": "NODE_ENV=local APP_NAME=subscription-service nest start subscription-service",
@@ -27,7 +27,6 @@
   "dependencies": {
     "@nestjs-modules/mailer": "^1.6.0",
     "@nestjs/axios": "^0.0.3",
-    "@nestjs/cli": "^8.0.0",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^1.1.5",
     "@nestjs/core": "^8.0.0",
