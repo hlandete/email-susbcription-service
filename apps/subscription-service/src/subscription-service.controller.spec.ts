@@ -14,9 +14,4 @@ describe('SubscriptionServiceController', () => {
     subscriptionServiceController = app.get<SubscriptionServiceController>(SubscriptionServiceController);
   });
 
-  /*describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(subscriptionServiceController.getHello()).toBe('Hello World!');
-    });
-  });*/
 });

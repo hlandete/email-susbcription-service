@@ -17,10 +17,6 @@
     "start:all": "npm run start:public-service & npm run start:subscription-service & npm run start:email-service",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
-    "docker:build:public-service": "npm run build:public-service && docker build --build-arg APP_NAME=public-service --build-arg PORT=3000 -t public-service  .",
-    "docker:build:subscription-service": "npm run build:subscription-service && docker build --build-arg APP_NAME=subscription-service --build-arg PORT=3001 -t subscription-service  .",
-    "docker:start:public-service": "docker run --publish 3000:3000 public-service",
-    "docker:build:email-service": "npm run build:email-service && docker build --build-arg APP_NAME=email-service --build-arg PORT=3002 -t email-service  .",
     "docker:build:all": "docker-compose build",
     "docker:start:all": "docker-compose up"
   },

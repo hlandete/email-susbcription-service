@@ -4,7 +4,6 @@ import { ISubscription } from '@app/shared/interfaces/subscription.interface';
 import { ISendMailOptions, MailerService } from '@nestjs-modules/mailer';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { Subscription } from 'apps/subscription-service/src/subscription/schema/subscription.schema';
 import { map } from 'rxjs';
 
 interface ProcessEmailResponse {
@@ -55,10 +54,16 @@ export class EmailServiceService {
    
   }
 
-  getSubscriptionData(query): Promise<Array<ISubscription>> {
+  getSubscriptionData(query: QuerySubscriptionDto): Promise<Array<ISubscription>> {
     query.newsletterFlag = true;
 
-    return this.httpService.get(process.env.SUBSCRIPTION_URL+'byFilter/'+query).pipe(map(response => response.data)).toPromise();
+    const params = {};
+
+    Object.keys(query).forEach(key =>{
+      params[key] = query[key];
+    })
+
+    return this.httpService.get(process.env.SUBSCRIPTION_SERVICE_URL,  {params}).pipe(map(response => response.data)).toPromise();
   }
 }
 

@@ -1,4 +1,4 @@
-FROM node:16.13.0 AS development
+FROM node:16 AS build
 ARG ENV
 
 ENV NODE_ENV=$ENV 
@@ -7,13 +7,13 @@ WORKDIR /usr/src/app
 
 COPY ./package*.json ./
 
-RUN npm ci --development
+RUN npm ci --build
 
 COPY . .
 
 RUN npm run build:subscription-service
 
-FROM node:16.13.0  as production
+FROM node:16-alpine as production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
@@ -24,8 +24,8 @@ COPY package*.json ./
 
 RUN npm ci --production
 
-COPY --from=development /usr/src/app/dist/apps/subscription-service .
-COPY --from=development /usr/src/app/apps/subscription-service/.env .
+COPY --from=build /usr/src/app/dist/apps/subscription-service .
+COPY --from=build /usr/src/app/apps/subscription-service/.env .
 
 
 CMD ["node", "main"]

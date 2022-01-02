@@ -7,7 +7,9 @@ import { SubscriptionServiceModule } from './subscription-service.module';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(SubscriptionServiceModule);
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true,
+  }));
   app.useGlobalGuards(new AuthGuardPublic());
 
   const config = new DocumentBuilder()

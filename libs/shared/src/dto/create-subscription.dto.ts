@@ -1,13 +1,17 @@
 import { IsGender } from "@app/shared/validators/isGender.validator";
-import { IsDateString, IsEmail, IsNumber, IsOptional, IsString } from "class-validator";
+import { Type } from "class-transformer";
+import { IsDate, IsDateString, IsEmail, IsNumber, IsNumberString, IsOptional, IsString } from "class-validator";
+import { isDate } from "util/types";
 
 export class CreateSubscriptionDto {
     @IsEmail()
     email: string;
     
-    @IsDateString()
+    @Type(() => Date)
+    @IsDate()
     birthDate: Date;
 
+    @Type(() => Number)
     @IsNumber()
     campaignId: number;
 

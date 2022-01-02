@@ -1,10 +1,10 @@
 import { IsGender } from "@app/shared/validators/isGender.validator";
-import { IsBoolean, IsDateString, IsEmail, IsNumber, IsOptional, IsString } from "class-validator";
+import { Type } from "class-transformer";
+import { IsBoolean, IsDate, IsEmail, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class QuerySubscriptionDto  {
 
     @IsOptional()
-    @IsEmail()
     _id?: string;
 
     @IsOptional()
@@ -12,10 +12,12 @@ export class QuerySubscriptionDto  {
     email?: string;
     
     @IsOptional()
-    @IsDateString()
+    @Type(() => Date)
+    @IsDate()
     birthDate?: Date;
 
     @IsOptional()
+    @Type(() => Number)
     @IsNumber()
     campaignId?: number;
 
@@ -24,6 +26,7 @@ export class QuerySubscriptionDto  {
     firstName?: string;
 
     @IsOptional()
+    @Type(() => Boolean)
     @IsBoolean()
     newsletterFlag?: boolean;
 

@@ -8,9 +8,9 @@ In **apps** folder we can see 3 different folders for each service. Also we can 
 
 In **libs** folder we have **shared** this acts as a library with functionality which is shared across the services.
 
-## Installation
+I have used latests node LTS version (16.13.0)
 
-The app has been only tested on Windows.
+## Installation
 
 We need to have node installed (v16.13.0 recommended). In order to run in docker we will also need to have Docker for windows installed
 
@@ -20,7 +20,7 @@ First we need to install al dependencies in package.json running:
 $ npm install
 ```
 
-## Running the app
+## Running the app locally
 
 If we want to run it locally we can use for each different service the following commands. Also you need to have mongo installed and configure .env files with host and port.
 
@@ -39,15 +39,23 @@ In order to run it in docker we have to build and then run the docker-compose fi
 
 ```bash
 # build
-$ npm run docker:build:all
+$ docker-compose build
 
 # start
-$ npm run socker:start:all
+$ docker-compose up
 ```
 
 ## Test
 
 Some tests has been coded but not implemented.
+
+## More info
+
+email-service
+
+-   Should be secured but I made it accessible exposing port 3002 to be able to check.
+-   Also the GET endpoint of this service is made to check the templates.
+-   Maling functions has been coded but not tested
 
 ## Stay in touch
 

@@ -9,10 +9,10 @@ import { EmailServiceService } from './email-service.service';
 
 @Module({
   imports: [
-    HttpModule,
     SharedModule.register(), 
+    HttpModule,
     MailerModule.forRoot({
-      transport: `smtps://user@domain.com:pass@smtp.domain.com`,
+      transport: `smtps://${process.env.MAILING_USER}@${process.env.MAILING_DOMAIN}:${process.env.MAILING_PASS}@smtp.${process.env.MAILING_DOMAIN}`,
       defaults: {
         from: '',
       },

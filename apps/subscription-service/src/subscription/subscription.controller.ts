@@ -6,7 +6,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } f
 import { SubscriptionService } from './subscription.service';
 
 
-@Controller('subscription')
+@Controller('subscriptions')
 export class SubscriptionController {
   constructor(private readonly subscriptionService: SubscriptionService) {}
 
@@ -24,8 +24,14 @@ export class SubscriptionController {
 
   @UseGuards(AuthGuardPrivate)
   @Get()
-  findAll() {
-    return this.subscriptionService.findAll();
+  findAll(@Query() query: QuerySubscriptionDto) {
+    if(query){
+      return this.subscriptionService.findByFilter(query);
+    }
+    else{
+      return this.subscriptionService.findAll();
+    }
+    
   }
 
   @UseGuards(AuthGuardPrivate)

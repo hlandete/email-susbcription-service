@@ -6,7 +6,9 @@ import { EmailServiceModule } from './email-service.module';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(EmailServiceModule);
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true,
+  }));
   
   const config = new DocumentBuilder()
   .setTitle('email-service')

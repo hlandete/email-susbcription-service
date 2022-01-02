@@ -7,7 +7,7 @@ import { HttpServiceInterceptor } from '@app/shared/interceptors/http.intercepto
 import { ResponseInterceptor } from '../interceptors/api_response.interceptor';
 
 @Module({
-  imports: [HttpModule, SharedModule.register()],
+  imports: [SharedModule.register(), HttpModule],
   controllers: [PublicController],
   providers: [{
     provide: 'APP_INTERCEPTOR',

@@ -2,7 +2,7 @@ version: '3'
 
 services:
     public-service:
-        image: public-service
+        image: public-service:latest
         build:
             context: .
             dockerfile: ./apps/public-service/Dockerfile
@@ -15,7 +15,7 @@ services:
             - public
 
     subscription-service:
-        image: subscription-service
+        image: subscription-service:latest
         depends_on:
             - mongodb
         build:
@@ -36,7 +36,7 @@ services:
             - mongo_data:/data/db/
 
     email-service:
-        image: email-service
+        image: email-service:latest
         build:
             context: .
             target: production

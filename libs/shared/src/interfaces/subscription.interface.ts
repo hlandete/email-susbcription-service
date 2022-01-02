@@ -1,4 +1,4 @@
-export interface ISubscription {
+export class ISubscription {
     _id: string;
     email: string;
     birthDate: Date;
