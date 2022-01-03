@@ -22,7 +22,9 @@ $ npm install
 
 ## Running the app locally
 
-If we want to run it locally we can use for each different service the following commands. Also you need to have mongo installed and configure .env files with host and port.
+If we want to run it locally we can use for each different service the following commands. Also you need to have mongo installed and configure local.env files with host and port and pass in the script NODE_ENV=local and the APP_NAME (this is already done in the scripts)
+
+Note that email-service needs in dist folder the templates but even I setup the compiler options it does not add the assets so I am doing a xcopy, In case you want to run it locally in Linux please run the correspondent script.
 
 ```bash
 # public-service
@@ -33,9 +35,10 @@ $ npm run start:subscription-service
 
 # email-service
 $ npm run start:email-service
+$ npm run start:email-service:linux
 ```
 
-In order to run it in docker we have to build and then run the docker-compose file
+In order to run it in docker we have to build and then run the docker-compose file. Here configure the .env files.
 
 ```bash
 # build
@@ -50,6 +53,10 @@ $ docker-compose up
 Some tests has been coded but not implemented.
 
 ## More info
+
+tokens
+
+-   I created 2 different tokens, PUBLIC and PRIVATE token. With PUBLIC you can access to PublicAuthGuard enpoints and with PRIVATE to all of them
 
 email-service
 

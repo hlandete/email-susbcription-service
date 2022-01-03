@@ -43,7 +43,7 @@
       "sourceRoot": "apps/email-service/src",
       "compilerOptions": {
         "tsConfigPath": "apps/email-service/tsconfig.app.json",
-        "assets": ["apps/email-service/templates/**/*"]
+        "assets": ["apps/email-service/templates/"]
       }
     },
     "subscription-service": {
