@@ -64,6 +64,10 @@ email-service
 -   Also the GET endpoint of this service is made to check the templates.
 -   Maling functions has been coded but not tested
 
+swagger
+
+-   For accessing to swagger data go to http://localhost:PORT/api
+
 ## Stay in touch
 
 -   Author - [Hector Landete](https://github.com/hlandete)
