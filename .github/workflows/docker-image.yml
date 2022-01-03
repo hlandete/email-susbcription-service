@@ -1,0 +1,24 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docke-compose build
+    
+    - name: Push Docker
+      run: docker push --all-tags registry-host:PORT
+      
+    - name: Delete Pods
+      run: kubecetl delete pods --namespace=subscriptions
