@@ -6,9 +6,8 @@
   "compilerOptions": {
     "webpack": true,
     "tsConfigPath": "apps/subscriptions/tsconfig.app.json",
-    "plugins": ["@nestjs/swagger/plugin"],
-    "assets": ["apps/email-service/templates/**/*"]
-  },
+    "plugins": ["@nestjs/swagger/plugin"]
+    },
   "projects": {
     "subscriptions": {
       "type": "application",
