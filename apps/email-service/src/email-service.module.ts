@@ -6,6 +6,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { Module } from '@nestjs/common';
 import { EmailServiceController } from './email-service.controller';
 import { EmailServiceService } from './email-service.service';
+import { ErrorInterceptor } from '@app/shared/interceptors/http-error.interceptor';
 
 @Module({
   imports: [
@@ -28,6 +29,10 @@ import { EmailServiceService } from './email-service.service';
   providers: [{
     provide: 'APP_INTERCEPTOR',
     useClass: HttpServiceInterceptor,
+  },
+  {
+    provide: 'APP_INTERCEPTOR',
+    useClass: ErrorInterceptor,
   },
   EmailServiceService
   ],

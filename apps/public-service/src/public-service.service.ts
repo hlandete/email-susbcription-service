@@ -17,8 +17,7 @@ export class PublicService {
 
   cancelSubscription(id: string){
     const updateBody: UpdateSubscriptionDto = {newsletterFlag: false}
-    
-    console.log(process.env.SUBSCRIPTION_SERVICE_URL+'/'+id)
+  
     return this.httpService.patch(process.env.SUBSCRIPTION_SERVICE_URL+'/'+id, updateBody).pipe(map(response => response.data));
   }
 }
